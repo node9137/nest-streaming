@@ -1,7 +1,7 @@
+import UserEntity from '@models/user.entity';
 import { UserModule } from '@modules/user.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-console.log(process.cwd())
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -11,11 +11,12 @@ console.log(process.cwd())
     password:"1234",
     port:3306,
     database:"nest-streaming",
-    entities : []
-    
+    entities : [UserEntity],
+    //process.cwd()+"/src/models/*.entity{.ts,.js}"
+    logging:"all"
   })
-  
   ,
+  
   UserModule
 ],
   controllers: [],

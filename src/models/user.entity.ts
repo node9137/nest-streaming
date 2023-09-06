@@ -1,13 +1,13 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, PrimaryColumn } from "typeorm";
 import { CommonBaseEntity } from "./common/common-base.entity";
 
-@Entity({name:"user",synchronize:false})
+@Entity({name:"user",synchronize:true})
 export default class UserEntity extends CommonBaseEntity{
     /**
      * 사용자의 Email 주소
      * @format email
      */
-    @Column({ length: 45 })
+    @PrimaryColumn()
     email!: string;
 
     /**
@@ -21,24 +21,24 @@ export default class UserEntity extends CommonBaseEntity{
      * 무작위 생성된 고유 문자열
      */
     @Column({nullable:true , length : 150})
-    salt ?: string | null;
+    salt ?: string;
 
     /**
      * 사용자의 등급 구분 (일반 사용자 , 프리미엄 사용자)
      */
     @Column({nullable:true})
-    rule ?: string | null
+    rule ?: string;
     /**
      * 사용자의 이름
      */
     @Column({nullable:true})
-    name ?: string | null
+    name ?: string;
 
     /**
      * 사용자의 팔로우 목록
      */
-    @Column({type:"array",nullable:true})
-    followList ?: JSON
+    @Column({type:"json",nullable:true})
+    followList ?: string[]
 
     /**
      * 만료 기한
