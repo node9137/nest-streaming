@@ -1,1 +1,3 @@
-export type JwtPayloadType = string;
+export type JwtPayloadType = {
+    email:string
+};

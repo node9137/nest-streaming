@@ -15,7 +15,7 @@ export default class UserEntity extends CommonBaseEntity{
      * @pattern ^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d`-~!@#$%^&*()/]{8,16}$
      */
     @Column({ nullable: true, type: String })
-    password?: string | null;
+    password?: string;
 
     /**
      * 무작위 생성된 고유 문자열

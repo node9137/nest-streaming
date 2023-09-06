@@ -1,8 +1,8 @@
 import { TypedBody, TypedRoute } from "@nestia/core";
-import {Controller } from "@nestjs/common";
+import {Controller, Req, UseGuards } from "@nestjs/common";
 import { UserService } from "@services/user.service";
+import { LoginRequestDto } from "src/dtos/login-request.dto";
 import { RegisterRequesetDto } from "src/dtos/register-request.dto";
-import typia from "typia";
 
 @Controller('user')
 export class UserController{
@@ -15,6 +15,15 @@ export class UserController{
         return {
             status:true,
             message : "회원가입에 성공했습니다."
+        }
+    }
+    @TypedRoute.Post("login")
+    async localLogin(@TypedBody()loginRequestDto : LoginRequestDto){
+        const token = await this.userService.login(loginRequestDto);
+        return {
+            status:true,
+            message : "로그인에 성공했습니다.",
+            data : token
         }
     }
 }   
