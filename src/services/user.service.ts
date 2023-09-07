@@ -3,6 +3,7 @@ import { hashPassword } from "@utils/hashPassword";
 import { validatePassword } from "@utils/validatePassword";
 import { LoginRequestDto } from "src/dtos/login-request.dto";
 import { RegisterRequesetDto } from "src/dtos/register-request.dto";
+import { UserInfoRequesetDto } from "src/dtos/user-info-request.dto";
 import { AlreadyExistedUser } from "src/errors/already-existed-user.error";
 import { NotExistedUser } from "src/errors/not-existed-user.error";
 import { NotValidatedPassword } from "src/errors/not-validate-password.error";
@@ -38,5 +39,14 @@ export class UserService{
             throw typia.random<NotValidatedPassword>();
         const token = this.jwtProvider.generateToken({email});
         return token;
+    }
+    public async updateUserInfo(email:string, userInfoRequestDto:UserInfoRequesetDto) {
+        const {password,role,name} = userInfoRequestDto;
+        const result = await this.userRepository.update({email}, {password, role, name});
+        return result.affected? true : false;
+    }
+    public async signOut(email:string) {
+        const result = await this.userRepository.update({email}, {isDeleted:true});
+        return result.affected? true : false;
     }
 }
