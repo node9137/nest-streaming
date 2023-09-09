@@ -27,7 +27,7 @@ export default class UserEntity extends CommonBaseEntity{
      * 사용자의 등급 구분 (일반 사용자 , 프리미엄 사용자)
      */
     @Column({nullable:true})
-    rule ?: string;
+    role ?: string;
     /**
      * 사용자의 이름
      */
@@ -46,5 +46,10 @@ export default class UserEntity extends CommonBaseEntity{
     @Column({nullable:true})
     expirationTime ?: Date
 
+    /**
+     * 탈퇴 여부
+     */
+    @Column({type: Boolean, default: false})
+    isDeleted : boolean;
 
 }
