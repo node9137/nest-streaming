@@ -17,7 +17,7 @@ export const NESTIA_CONFIG: INestiaConfig = {
         },
         servers:[
             {
-                "url": "http://localhost:8000/",
+                "url": "http://localhost:3000/",
                 "description": "Testing server url"
             }
         ]

@@ -33,7 +33,7 @@ export default class SoundtrackEntity extends CommonBaseEntity{
     /**
      * 음원의 이름
      */
-    @Column({})
+    @Column()
     name : string;
 
     /**
@@ -45,7 +45,7 @@ export default class SoundtrackEntity extends CommonBaseEntity{
     /**
      * 음원의 가수
      */
-    @Column({name:"max_format",default:"MP3"})
+    @Column()
     singer: string;
 
     /**
