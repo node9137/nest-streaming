@@ -4,10 +4,15 @@ import { readFileSync } from "fs";
 import {join} from "path";
 
 export default async function (app: INestApplication) {
-  const swaggerConfig = readFileSync(
-    join(process.cwd(), "/bin/swagger.json"),
-    "utf-8"
-  );
-  const swaggerDocument = JSON.parse(swaggerConfig);
-  SwaggerModule.setup("/api-docs", app, swaggerDocument);
+  try{
+    const swaggerConfig = readFileSync(
+      join(process.cwd(), "/bin/swagger.json"),
+      "utf-8"
+      );
+      const swaggerDocument = JSON.parse(swaggerConfig);
+      if(swaggerDocument) 
+      SwaggerModule.setup("/api-docs", app, swaggerDocument);
+  }
+  catch{return}
+
 }
