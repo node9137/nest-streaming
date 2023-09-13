@@ -1,7 +1,9 @@
 import SoundtrackEntity from "@models/soundtrack.entity";
 import { Inject, Injectable } from "@nestjs/common";
+import { SoundtrackRepository } from "@repositories/soundtrack.repository";
 //import { SoundtrackRepository } from "@repositories/soundtrack.repository";
 import { CreateSoundtrackRequestDto } from "src/dtos/soundtrack/create-soundtrack-request.dto";
+import { GetSoundtrackQuery } from "src/dtos/soundtrack/get-soundtracks-query.dto";
 import { UpdateSoundtrackRequestDto } from "src/dtos/soundtrack/update-soundtrack-request.dto";
 import { NotExistedSoundtrack } from "src/errors/soundtrack/not-existed-soundtrack.error";
 import { NotMatchedUser } from "src/errors/soundtrack/not-matched-user.error";
@@ -14,14 +16,9 @@ import typia from "typia";
 export class SoundtrackService{
     constructor(
         @Inject('SOUNDTRACK_REPOSITORY')
-        private readonly soundtrackRepository : Repository<SoundtrackEntity>){}
+        private readonly soundtrackRepository : SoundtrackRepository){}
     async create(email:string,createSoundtrackRequestDto : CreateSoundtrackRequestDto){
-        try{
-
             return await this.soundtrackRepository.save({creatorId:email,...createSoundtrackRequestDto})
-        }catch(err){
-            return true
-        }
     }
     async update(email:string,trackId : number,updateSoundtrackRequestDto:UpdateSoundtrackRequestDto){
         const record = await this.soundtrackRepository.findOne({where:{id:trackId}});
@@ -46,5 +43,9 @@ export class SoundtrackService{
             throw typia.random<NotExistedSoundtrack>();
         return record;
         }
-    async getMany(){}
+    async getMany(getSoundtrackQuery : GetSoundtrackQuery){
+        const {orderBy,skip,take}=getSoundtrackQuery;
+        const records = await this.soundtrackRepository.find({skip,order:{created:orderBy},select:{id:true,name:true,category:true},take})
+        return records;
+    }
 }

@@ -1,11 +1,14 @@
 import { Email } from "@decorators/email.decorator";
 import { TrackId } from "@decorators/trackId.decorator";
 import SoundtrackEntity from "@models/soundtrack.entity";
-import { TypedBody, TypedParam, TypedRoute } from "@nestia/core";
+import { TypedBody, TypedParam, TypedQuery, TypedRoute } from "@nestia/core";
 import {Controller, UseGuards } from "@nestjs/common";
 import { JwtAuthGuard } from "@providers/jwt-auth.guard";
 import { SoundtrackService } from "@services/soundtrack.service";
 import { CreateSoundtrackRequestDto } from "src/dtos/soundtrack/create-soundtrack-request.dto";
+import { GetSoundtrackResponseDto } from "src/dtos/soundtrack/get-soundtrack-response.dto";
+import { GetSoundtrackQuery } from "src/dtos/soundtrack/get-soundtracks-query.dto";
+import { GetSoundtracksResponseDto } from "src/dtos/soundtrack/get-soundtracks-response.dto";
 import { UpdateSoundtrackRequestDto } from "src/dtos/soundtrack/update-soundtrack-request.dto";
 import { Try } from "src/types/response.type";
 
@@ -17,7 +20,6 @@ export class SoundtrackController{
     @TypedRoute.Post()
     @UseGuards(JwtAuthGuard)
     async createSoundtrack(@Email()email : string,@TypedBody()createSoundtrackRequestDto : CreateSoundtrackRequestDto) : Promise<Try<null>>{
-        console.log(email);
         await this.soundtrackService.create(email,createSoundtrackRequestDto);
         return {
             status:true,
@@ -25,13 +27,16 @@ export class SoundtrackController{
         }
     }
     @TypedRoute.Get()
-    async getSoundtracks(){
-        const data = await this.soundtrackService.getMany();
+    async getSoundtracks(@TypedQuery()getSoundtrackQuery : GetSoundtrackQuery):Promise<Try<GetSoundtracksResponseDto[]>>{
+        const data = await this.soundtrackService.getMany(getSoundtrackQuery);
+        return {
+            status:true,
+            data
+        }
     }
     @TypedRoute.Get("/:trackId")
-    async getgetSoundtrack(@TypedParam("trackId")trackId : number):Promise<Try<SoundtrackEntity>>{
+    async getgetSoundtrack(@TypedParam("trackId")trackId : number):Promise<Try<GetSoundtrackResponseDto>>{
         const data = await this.soundtrackService.getOne(trackId);
-        console.log(data);
         return {
             status:true,
             data
