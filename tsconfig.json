@@ -25,7 +25,7 @@
         "src/services/*"
       ],
       "@repositories/*": [
-        "src/repositoires/*"
+        "src/repositories/*"
       ],
       "@models/*": [
         "src/models/*"

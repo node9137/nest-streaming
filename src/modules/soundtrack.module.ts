@@ -1,15 +1,30 @@
 import { SoundtrackController } from "@controllers/soundtrack.controller";
 import { CustomTypeOrmModule } from "@libs/typeorm/custom-typeorm.module";
+import SoundtrackEntity from "@models/soundtrack.entity";
 import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
 import { SoundtrackService } from "@services/soundtrack.service";
-import { SoundtrackRepository } from "src/repositories/soundtrack.repository";
+import { DataSource } from "typeorm";
 
-
+export const soundtrackProviders = [
+    {
+      provide: 'SOUNDTRACK_REPOSITORY',
+      useFactory: (dataSource: DataSource) => dataSource.getRepository(SoundtrackEntity),
+      inject: [DataSource],
+    },
+  ];
+  
 
 @Module({
-    imports:[CustomTypeOrmModule.forCustomRepository([SoundtrackRepository])],
+    imports:[
+        TypeOrmModule
+        //CustomTypeOrmModule.forCustomRepository([SoundtrackRepository])
+        //TypeOrmModule.forFeature([SoundtrackEntity])
+    ],
     controllers:[SoundtrackController],
-    providers:[SoundtrackService],
+    providers:[SoundtrackService,
+        ...soundtrackProviders
+    ],
 })
 export class SoundtrackModule implements NestModule{
     configure(consumer: MiddlewareConsumer) {

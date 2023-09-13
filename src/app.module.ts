@@ -1,4 +1,3 @@
-import SoundtrackEntity from '@models/soundtrack.entity';
 import UserEntity from '@models/user.entity';
 import { SoundtrackModule } from '@modules/soundtrack.module';
 import { UserModule } from '@modules/user.module';
@@ -13,7 +12,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     password:"1234",
     port:3306,
     database:"nest-streaming",
-    entities : [UserEntity,SoundtrackEntity],
+    entities : ["dist/**/*.entity.js"],
     //process.cwd()+"/src/models/*.entity{.ts,.js}"
     logging:"all",
     synchronize:true
@@ -24,6 +23,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 ],
   controllers: [],
   providers: [],
+  exports:[TypeOrmModule]
 })
 
 export class AppModule {}

@@ -2,6 +2,7 @@ import { DynamicModule, Provider } from "@nestjs/common";
 import { getDataSourceToken } from "@nestjs/typeorm";
 import { DataSource } from "typeorm";
 import { TYPEORM_CUSTOM_REPOSITORY } from "./custom-typeorm.decorator";
+import SoundtrackEntity from "@models/soundtrack.entity";
 
 export class CustomTypeOrmModule {
   public static forCustomRepository<T extends new (...args: any[]) => any>(
@@ -11,7 +12,6 @@ export class CustomTypeOrmModule {
 
     for (const repository of repositories) {
       const entity = Reflect.getMetadata(TYPEORM_CUSTOM_REPOSITORY, repository);
-
       if (!entity) {
         continue;
       }
