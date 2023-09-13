@@ -9,7 +9,7 @@ export default class SoundtrackEntity extends CommonBaseEntity{
      * 음원 Id
      */
     @PrimaryGeneratedColumn("increment")
-    id:string
+    id:number
 
     /**
      * 음원 생성자 Email

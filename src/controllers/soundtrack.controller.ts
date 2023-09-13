@@ -29,28 +29,27 @@ export class SoundtrackController{
         const data = await this.soundtrackService.getMany();
     }
     @TypedRoute.Get("/:trackId")
-    async getgetSoundtrack(@TypedParam("trackId")trackId : string):Promise<Try<SoundtrackEntity>>{
+    async getgetSoundtrack(@TypedParam("trackId")trackId : number):Promise<Try<SoundtrackEntity>>{
         const data = await this.soundtrackService.getOne(trackId);
-        if(data)
+        console.log(data);
         return {
             status:true,
             data
         }
-        else
-            throw Error
     }
     @TypedRoute.Patch("/:trackId")
     @UseGuards(JwtAuthGuard)
-    async updateSoundtrack(@TypedParam("trackId")trackId : string,updateSoundtrackRequestDto : UpdateSoundtrackRequestDto) : Promise<Try<null>>{
-        await this.soundtrackService.update(trackId,updateSoundtrackRequestDto);
+    async updateSoundtrack(@Email()email:string,@TypedParam("trackId")trackId : number,@TypedBody()updateSoundtrackRequestDto : UpdateSoundtrackRequestDto) : Promise<Try<null>>{
+        await this.soundtrackService.update(email,trackId,updateSoundtrackRequestDto);
         return {
             status:true,
             message:"음원을 수정했습니다."
         }
     }
     @TypedRoute.Delete("/:trackId")
-    async deleteSoundtrack(@TypedParam("trackId")trackId : string):Promise<Try<null>>{
-        await this.soundtrackService.delete(trackId);
+    @UseGuards(JwtAuthGuard)
+    async deleteSoundtrack(@Email()email:string,@TypedParam("trackId")trackId : number):Promise<Try<null>>{
+        await this.soundtrackService.delete(email,trackId);
         return {
             status:true,
             message:"음원을 삭제했습니다."

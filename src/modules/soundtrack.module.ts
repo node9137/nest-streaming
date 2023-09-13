@@ -3,6 +3,7 @@ import { CustomTypeOrmModule } from "@libs/typeorm/custom-typeorm.module";
 import SoundtrackEntity from "@models/soundtrack.entity";
 import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { SoundtrackRepository } from "@repositories/soundtrack.repository";
 import { SoundtrackService } from "@services/soundtrack.service";
 import { DataSource } from "typeorm";
 
@@ -17,8 +18,8 @@ export const soundtrackProviders = [
 
 @Module({
     imports:[
-        TypeOrmModule
-        //CustomTypeOrmModule.forCustomRepository([SoundtrackRepository])
+//        TypeOrmModule
+        CustomTypeOrmModule.forCustomRepository([SoundtrackRepository])
         //TypeOrmModule.forFeature([SoundtrackEntity])
     ],
     controllers:[SoundtrackController],
