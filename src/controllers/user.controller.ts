@@ -5,6 +5,7 @@ import { LoginRequestDto } from "src/dtos/login-request.dto";
 import { RegisterRequesetDto } from "src/dtos/register-request.dto";
 import { UserInfoRequesetDto } from "src/dtos/user-info-request.dto";
 import { JwtAuthGuard } from "src/providers/jwt-auth.guard";
+import { Try } from "src/types/response.type";
 
 @Controller('user')
 export class UserController{
@@ -12,7 +13,7 @@ export class UserController{
     }
     
     @TypedRoute.Post("register")
-    async localRegister(@TypedBody()registerRequestDto : RegisterRequesetDto){
+    async localRegister(@TypedBody()registerRequestDto : RegisterRequesetDto) : Promise<Try<null>>{
         await this.userService.register(registerRequestDto);
         return {
             status:true,
@@ -20,7 +21,7 @@ export class UserController{
         }
     }
     @TypedRoute.Post("login")
-    async localLogin(@TypedBody()loginRequestDto : LoginRequestDto){
+    async localLogin(@TypedBody()loginRequestDto : LoginRequestDto) :Promise<Try<string>>{
         const token = await this.userService.login(loginRequestDto);
         return {
             status:true,
@@ -30,7 +31,7 @@ export class UserController{
     }
     @UseGuards(JwtAuthGuard)
     @TypedRoute.Patch("update")
-    async updateUserInfo(@Req() req, @TypedBody()userInfoRequestDto :UserInfoRequesetDto) {
+    async updateUserInfo(@Req() req, @TypedBody()userInfoRequestDto :UserInfoRequesetDto):Promise<Try<null>> {
         const result = await this.userService.updateUserInfo(req.user.email, userInfoRequestDto);
         return {
             status:true,
@@ -39,7 +40,7 @@ export class UserController{
     }
     @UseGuards(JwtAuthGuard)
     @TypedRoute.Delete("signout")
-    async userSignOut(@Req() req) {
+    async userSignOut(@Req() req):Promise<Try<null>> {
         const result = await this.userService.signOut(req.user.email);
         return {
             status:true,

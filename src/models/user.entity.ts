@@ -1,7 +1,8 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 import { CommonBaseEntity } from "./common/common-base.entity";
+import SoundtrackEntity from "./soundtrack.entity";
 
-@Entity({name:"user",synchronize:true})
+@Entity({name:"user"})
 export default class UserEntity extends CommonBaseEntity{
     /**
      * 사용자의 Email 주소
@@ -51,5 +52,7 @@ export default class UserEntity extends CommonBaseEntity{
      */
     @Column({type: Boolean, default: false})
     isDeleted : boolean;
+
+  
 
 }

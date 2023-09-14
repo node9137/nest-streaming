@@ -12,7 +12,6 @@ import { JwtPayloadType } from "./token.type";
 @Injectable()
 export class JwtStragety extends PassportStrategy(Strategy){
     constructor(
-        @InjectRepository(UserRepository)
         private userRepository : UserRepository
     ){
         super({
