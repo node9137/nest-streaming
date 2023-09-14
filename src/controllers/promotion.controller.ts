@@ -1,10 +1,10 @@
 import UserEntity from '@models/user.entity';
 import { TypedBody, TypedRoute } from '@nestia/core';
-import { Body, Controller, Post, Req, UseGuards, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, ParseIntPipe, Post, Put, Query, Req, UseGuards, ValidationPipe, Delete } from '@nestjs/common';
 import { PromotionService } from '@services/promotion.service';
 import { Email } from 'src/decorators/email.decorator';
 import { JwtPayload } from 'src/decorators/jwt-payload.decorator';
-import { PromotionCreateDto } from 'src/dtos/promotion.dto';
+import { PromotionCreateDto, PromotionUpdateDto } from 'src/dtos/promotion.dto';
 import { JwtAuthGuard } from 'src/providers/jwt-auth.guard';
 
 @Controller('promotion')
@@ -21,24 +21,37 @@ export class PromotionController {
         return this.promotionService.createPromotionService(email, data)
     }
     
-    @TypedRoute.Get("findPromotion")
-    async finePromotionOne(@Req() req,) {
-        return this.promotionService.findPromotionService()
+    @UseGuards(JwtAuthGuard)
+    @Get("findPromotion")    
+    async finePromotionOne(
+        @Query( 'id', ParseIntPipe) id : number,
+        @Email() email
+    ) {
+        return this.promotionService.findPromotionService(id)
     }
 
-    @TypedRoute.Get("findPromotionAll")
+
+    @UseGuards(JwtAuthGuard)
+    @Get("findPromotionAll")    
     async finePromotionAll(@Req() req,) {
         return this.promotionService.findPromotionAllService()
     }
 
-
-    @TypedRoute.Put("updatePromotion")
-    async updatePromotionAll(@Req() req,) {
-        return this.promotionService.updatePromotionService()
+    @UseGuards(JwtAuthGuard)
+    @Put("updatePromotion")
+    async updatePromotionAll(
+        @Query( 'id', ParseIntPipe) id : number,
+        @Email() email,
+        @Body(new ValidationPipe) data: PromotionUpdateDto,
+    ) {
+        return this.promotionService.updatePromotionService(id, data)
     }
 
-    @TypedRoute.Delete("deletePromotion")
-    async deletePromotion(@Req() req,) {
-        return this.promotionService.deletePromotionService()
+    @UseGuards(JwtAuthGuard)    
+    @Delete("deletePromotion")
+    async deletePromotion(
+        @Query( 'id', ParseIntPipe) id : number,
+    ) {
+        return this.promotionService.deletePromotionService(id)
     }
 }
