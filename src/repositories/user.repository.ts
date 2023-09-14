@@ -5,4 +5,4 @@ import { Repository } from "typeorm";
 @CustomRepository(UserEntity)
 export class UserRepository extends Repository<UserEntity>{
 
-}
+} 
