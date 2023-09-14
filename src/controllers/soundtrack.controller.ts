@@ -1,6 +1,4 @@
 import { Email } from "@decorators/email.decorator";
-import { TrackId } from "@decorators/trackId.decorator";
-import SoundtrackEntity from "@models/soundtrack.entity";
 import { TypedBody, TypedParam, TypedQuery, TypedRoute } from "@nestia/core";
 import {Controller, UseGuards } from "@nestjs/common";
 import { JwtAuthGuard } from "@providers/jwt-auth.guard";

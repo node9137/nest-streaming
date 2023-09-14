@@ -1,4 +1,4 @@
-import UserEntity from '@models/user.entity';
+import { SoundtrackFollowListModule } from '@modules/soundtrack-list-follow.module';
 import { SoundtrackModule } from '@modules/soundtrack.module';
 import { UserModule } from '@modules/user.module';
 import { Module } from '@nestjs/common';
@@ -18,6 +18,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     synchronize:true
   })
   ,
+  SoundtrackFollowListModule,
   SoundtrackModule,
   UserModule
 ],
