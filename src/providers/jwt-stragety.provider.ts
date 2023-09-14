@@ -4,7 +4,7 @@ import { PassportStrategy } from "@nestjs/passport";
 import { InjectRepository } from "@nestjs/typeorm";
 import {ExtractJwt, Strategy} from 'passport-jwt';
 import { UserRepository } from "src/repositories/user.repository";
-import { NotExistedUser } from "src/errors/not-existed-user.error";
+import { NotExistedUser } from "src/errors/user/not-existed-user.error";
 import typia from "typia";
 import { JwtPayloadType } from "./token.type";
 

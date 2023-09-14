@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { SoundtrackListFollowRepository } from "@repositories/soundtrack-list-follow.repository";
 import { UserRepository } from "@repositories/user.repository";
-import { NotExistedUser } from "src/errors/not-existed-user.error";
+import { NotExistedUser } from "src/errors/user/not-existed-user.error";
 import { NotExistedSoundtrackListFollow } from "src/errors/soundtrackListFollow/not-existed-soundtrackListFollow.error";
 import typia from "typia";
 

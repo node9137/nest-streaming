@@ -2,7 +2,9 @@ import { SoundtrackFollowListModule } from '@modules/soundtrack-list-follow.modu
 import { SoundtrackModule } from '@modules/soundtrack.module';
 import { UserModule } from '@modules/user.module';
 import { Module } from '@nestjs/common';
+import { APP_FILTER } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AllExceptionsFilter } from './interceptor/error.interceptor';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -18,12 +20,17 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     synchronize:true
   })
   ,
+
+
   SoundtrackFollowListModule,
   SoundtrackModule,
   UserModule
 ],
   controllers: [],
-  providers: [],
+  providers: [{
+    provide:APP_FILTER,
+    useClass:AllExceptionsFilter
+  }],
   exports:[TypeOrmModule]
 })
 
