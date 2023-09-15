@@ -1,4 +1,3 @@
-import { CommonBaseError } from "../common-base.error";
 import { ExceptionBase } from "../exception.base";
 
 export class NotExistedUser extends ExceptionBase{

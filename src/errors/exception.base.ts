@@ -2,6 +2,7 @@
 export interface SerializedException {
   message: string;
   code: string;
+  status:false;
   stack?: string;
   cause?: string;
   businessCode?:number;
@@ -22,6 +23,7 @@ export abstract class ExceptionBase extends Error {
   }
   toJSON(): SerializedException {
     return {
+      status:false,
       message: this.message,
       code: this.code,
       businessCode : this.businessCode,
