@@ -4,7 +4,7 @@ import { randomBytes } from 'crypto';
 import moment from 'moment';
 import { Charsets } from 'mysql2';
 import { PromotionCreateDto, PromotionUpdateDto } from 'src/dtos/promotion.dto';
-import { PromotionRepository } from "src/repositories/promotion.repository";
+import { PromotionRepository } from "@repositories/promotion.repository";
 
 @Injectable()
 export class PromotionService {

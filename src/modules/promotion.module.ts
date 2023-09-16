@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { PromotionController } from '@controllers/promotion.controller';
 import { PromotionService } from '@services/promotion.service';
 import { CustomTypeOrmModule } from '@libs/typeorm/custom-typeorm.module';
-import { PromotionRepository } from 'src/repositories/promotion.repository';
+import { PromotionRepository } from '@repositories/promotion.repository';
 
 
 @Module({
