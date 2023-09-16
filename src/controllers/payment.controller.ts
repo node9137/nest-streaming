@@ -46,7 +46,8 @@ export class PaymentController {
     @UseGuards(JwtAuthGuard)    
     @Delete("deletePayment")
     async deletePromotion(
+        @Query( 'id', ParseIntPipe) id : number,
     ) {
-        return this.paymentService.deletePaymentService()
+        return this.paymentService.deletePaymentService(id)
     }
 }

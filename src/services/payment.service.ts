@@ -34,8 +34,10 @@ export class PaymentService {
         });
     }
 
-    public async deletePaymentService(){
-        return await "1"
+    public async deletePaymentService(id : number){
+        const payment = await this.getPaymentById(id);        
+        if (!payment) throw new HttpException('NOT_FOUND', HttpStatus.NOT_FOUND);
+        return this.paymentRepository.remove(payment)
     }
     async getPromotionByCode(code: string) {
         return this.promotionRepository.findOne({where:{code}});
