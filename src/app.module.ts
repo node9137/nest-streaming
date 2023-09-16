@@ -1,3 +1,4 @@
+import { PlaylistModule } from '@modules/playlist.module';
 import { SoundtrackModule } from '@modules/soundtrack.module';
 import { UserModule } from '@modules/user.module';
 import { PromotionModule } from '@modules/promotion.module';
@@ -19,6 +20,7 @@ import { PaymentModule } from './modules/payment.module';
     entities : ["dist/**/*.entity.js"],
   })
   ,
+  PlaylistModule,
   PromotionModule,
   SoundtrackModule,
   UserModule,
