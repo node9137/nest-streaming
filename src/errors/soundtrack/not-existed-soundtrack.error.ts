@@ -1,7 +1,10 @@
-import { CommonBaseError } from "../common-base.error";
+import { ExceptionBase } from "../exception.base";
 
-export interface NotExistedSoundtrack extends CommonBaseError{
-    status : false;
-    businessCode : 1012,
-    message:"정보에 일치하는 음원이 없습니다."
+export class NotExistedSoundtrack extends ExceptionBase{
+    static readonly message = "정보에 일치하는 음원이 없습니다."
+    public readonly code = 'SOUNDTRACK.NOT_EXIST'
+    static readonly businessCode = 1012
+    constructor(cause?:Error,metadata?:unknown){
+        super(NotExistedSoundtrack.message,NotExistedSoundtrack.businessCode,cause)
+    }
 }
