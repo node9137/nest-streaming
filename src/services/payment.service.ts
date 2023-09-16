@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PaymentRepository } from "@repositories/payment.repository";
 import { PromotionRepository } from '@repositories/promotion.repository';
 import { UserRepository } from '@repositories/user.repository';
@@ -19,17 +19,19 @@ export class PaymentService {
         return await this.paymentRepository.save({...data})    
     }
 
-
     public async findPaymentService(id : number){
-        console.log("id : ", id)
         return await this.paymentRepository.findOne({ where: {id}})
     }
     public async findPaymentAllService(){
         return await this.paymentRepository.find()
     }
 
-    public async updatePaymentService(){        
-        return await "1"
+    public async updatePaymentService(id: number, data: PaymentUpdateDto){        
+        const payment = await this.getPaymentById(id);        
+        if (!payment) throw new HttpException('NOT_FOUND', HttpStatus.NOT_FOUND);
+        return this.paymentRepository.update(id, {
+          ...data,
+        });
     }
 
     public async deletePaymentService(){
@@ -41,6 +43,10 @@ export class PaymentService {
 
     async getUserByEmail(email: string) {
         return this.userRepository.findOneBy({email});
+    }
+
+    async getPaymentById(id: number) {
+        return this.paymentRepository.findOneBy({id});
     }
 
     async userRoleChange(email: string) {    
