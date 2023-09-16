@@ -3,6 +3,7 @@ import { UserModule } from '@modules/user.module';
 import { PromotionModule } from '@modules/promotion.module';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PaymentModule } from './modules/payment.module';
 
 @Module({
   imports: [
@@ -14,13 +15,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     port:3306,
     database:"nest-streaming",
     logging:"all",
-    synchronize: true
+    synchronize: true,
     entities : ["dist/**/*.entity.js"],
   })
   ,
   PromotionModule,
   SoundtrackModule,
-  UserModule
+  UserModule,
+  PaymentModule
 ],
   controllers: [],
   providers: [],

@@ -1,9 +1,9 @@
 import { CommonBaseEntity } from "./common/common-base.entity";
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import PaymentEntity from "./payment.entity";
 
 @Entity({name:"promotion",synchronize:true})
 export default class PromotionEntity extends CommonBaseEntity{
-
     @PrimaryGeneratedColumn({ name : 'id'})
     id : number
 
