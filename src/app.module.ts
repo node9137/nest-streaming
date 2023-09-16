@@ -1,3 +1,4 @@
+import { PlaylistModule } from '@modules/playlist.module';
 import { SoundtrackModule } from '@modules/soundtrack.module';
 import { UserModule } from '@modules/user.module';
 import { PromotionModule } from '@modules/promotion.module';
@@ -14,10 +15,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     port:3306,
     database:"nest-streaming",
     logging:"all",
-    synchronize: true
+    synchronize: true,
     entities : ["dist/**/*.entity.js"],
   })
   ,
+  PlaylistModule,
   PromotionModule,
   SoundtrackModule,
   UserModule
