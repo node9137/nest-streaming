@@ -1,3 +1,8 @@
+# local files
+.idea/
+yarn.lock
+package-lock.json
+
 # Output File
 bin
 
