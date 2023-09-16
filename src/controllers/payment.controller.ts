@@ -1,5 +1,5 @@
 import { Email } from '@decorators/email.decorator';
-import { Controller, Post, UseGuards, Get, Put, Delete, Query, Req, Body, ValidationPipe } from '@nestjs/common';
+import { Controller, Post, UseGuards, Get, Put, Delete, Query, Req, Body, ValidationPipe, ParseIntPipe } from '@nestjs/common';
 import { JwtAuthGuard } from '@providers/jwt-auth.guard';
 import { PaymentService } from '@services/payment.service';
 import { PaymentCreateDto } from 'src/dtos/payment.dto';
@@ -21,14 +21,15 @@ export class PaymentController {
     @UseGuards(JwtAuthGuard)
     @Get("findPayment")    
     async finePromotionOne(
+        @Query( 'id', ParseIntPipe) id : number,
     ) {
-        return this.paymentService.findPaymentService()
+        return this.paymentService.findPaymentService(id)
     }
 
 
     @UseGuards(JwtAuthGuard)
     @Get("findPaymentAll")    
-    async finePromotionAll(@Req() req,) {
+    async finePromotionAll() {
         return this.paymentService.findPaymentAllService()
     }
 

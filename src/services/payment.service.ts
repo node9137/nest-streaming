@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PaymentRepository } from "@repositories/payment.repository";
 import { PromotionRepository } from '@repositories/promotion.repository';
 import { UserRepository } from '@repositories/user.repository';
-import { PaymentCreateDto } from 'src/dtos/payment.dto';
+import { PaymentCreateDto, PaymentUpdateDto } from 'src/dtos/payment.dto';
 import * as moment from "moment-timezone";
 
 @Injectable()
@@ -19,12 +19,13 @@ export class PaymentService {
         return await this.paymentRepository.save({...data})    
     }
 
-    public async findPaymentService(){
-        return await "1"
-    }
 
+    public async findPaymentService(id : number){
+        console.log("id : ", id)
+        return await this.paymentRepository.findOne({ where: {id}})
+    }
     public async findPaymentAllService(){
-        return await "1"
+        return await this.paymentRepository.find()
     }
 
     public async updatePaymentService(){        
