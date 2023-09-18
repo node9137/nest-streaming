@@ -15,7 +15,7 @@ export class SoundtrackListFollowService{
     async create(email:string,soundtrackListId:string){
         const user = await this.userRepository.findOne({where:{email}});
         if(!user)
-            throw typia.random<NotExistedUser>();
+            throw new NotExistedUser();
         /**
          * 차후 , SoundtrackList Repository 추가 하여 , 존재하는지 검증 해야함.
          */
@@ -24,14 +24,14 @@ export class SoundtrackListFollowService{
     async delete(email:string,soundtrackListId:string){
         const user = await this.userRepository.findOne({where:{email}});
         if(!user)
-            throw typia.random<NotExistedUser>();
+            throw new NotExistedUser();
         /**
          * 차후 , SoundtrackList Repository 추가 하여 , 존재하는지 검증 해야함.
          */
 
         const record = await this.soundtrackListFollowRepository.findOne({where:{userEmail:email,soundtrackListId:soundtrackListId}});
         if(!record)
-            throw typia.random<NotExistedSoundtrackListFollow>();
+            throw new NotExistedSoundtrackListFollow();
         return await this.soundtrackListFollowRepository.delete(record.id);
     }
 }

@@ -7,4 +7,4 @@ export class NotExistedSoundtrack extends ExceptionBase{
     constructor(cause?:Error,metadata?:unknown){
         super(NotExistedSoundtrack.message,NotExistedSoundtrack.businessCode,cause)
     }
-}
+}   
