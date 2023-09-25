@@ -1,10 +1,10 @@
 import { TypedBody, TypedRoute } from "@nestia/core";
 import {Controller, Req, UseGuards } from "@nestjs/common";
+import { JwtAuthGuard } from "@providers/jwt-auth.guard";
 import { UserService } from "@services/user.service";
 import { LoginRequestDto } from "src/dtos/login-request.dto";
 import { RegisterRequesetDto } from "src/dtos/register-request.dto";
 import { UserInfoRequesetDto } from "src/dtos/user-info-request.dto";
-import { JwtAuthGuard } from "src/providers/jwt-auth.guard";
 import { Try } from "src/types/response.type";
 
 @Controller('user')
@@ -13,7 +13,7 @@ export class UserController{
     }
     
     @TypedRoute.Post("register")
-    async localRegister(@TypedBody()registerRequestDto : RegisterRequesetDto) : Promise<Try<null>>{
+    async localRegister(@TypedBody()registerRequestDto : RegisterRequesetDto){
         await this.userService.register(registerRequestDto);
         return {
             status:true,
@@ -21,14 +21,14 @@ export class UserController{
         }
     }
     @TypedRoute.Post("login")
-    async localLogin(@TypedBody()loginRequestDto : LoginRequestDto) :Promise<Try<string>>{
+    async localLogin(@TypedBody()loginRequestDto : LoginRequestDto){
         const token = await this.userService.login(loginRequestDto);
         return {
             status:true,
             message : "로그인에 성공했습니다.",
             data : token
         }
-    }
+    }   
     @UseGuards(JwtAuthGuard)
     @TypedRoute.Patch("update")
     async updateUserInfo(@Req() req, @TypedBody()userInfoRequestDto :UserInfoRequesetDto):Promise<Try<null>> {

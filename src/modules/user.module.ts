@@ -10,7 +10,9 @@ import { UserRepository } from "src/repositories/user.repository";
 
 
 @Module({
-    imports:[CustomTypeOrmModule.forCustomRepository([UserRepository]),JwtModule.register({
+    imports:[
+        CustomTypeOrmModule.forCustomRepository([UserRepository]),
+        JwtModule.register({
         secret:"1234",
         signOptions:{expiresIn:"15m"},
     })],

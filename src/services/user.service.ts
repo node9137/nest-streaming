@@ -4,11 +4,12 @@ import { validatePassword } from "@utils/validatePassword";
 import { LoginRequestDto } from "src/dtos/login-request.dto";
 import { RegisterRequesetDto } from "src/dtos/register-request.dto";
 import { UserInfoRequesetDto } from "src/dtos/user-info-request.dto";
-import { AlreadyExistedUser } from "src/errors/already-existed-user.error";
-import { NotExistedUser } from "src/errors/not-existed-user.error";
-import { NotValidatedPassword } from "src/errors/not-validate-password.error";
+import { AlreadyExistedUser } from "src/errors/user/already-existed-user.error";
+import { NotExistedUser } from "src/errors/user/not-existed-user.error";
+import { NotValidatedPassword } from "src/errors/user/not-validate-password.error";
 import { JwtProvider } from "src/providers/jwt.provider";
 import { UserRepository } from "src/repositories/user.repository";
+import { Try } from "src/types/response.type";
 import typia from "typia";
 
 
@@ -23,7 +24,7 @@ export class UserService{
         const {email,password} = registerRequestDto
         const isExistedUser = await this.userRepository.findOne({where:{email}})
         if(isExistedUser)
-            throw typia.random<AlreadyExistedUser>();
+            throw new AlreadyExistedUser();
         if(password)
             registerRequestDto.password = hashPassword(password);
         await this.userRepository.save({...registerRequestDto});
@@ -33,10 +34,10 @@ export class UserService{
         const {email,password} = loginRequestDto;
         const user = await this.userRepository.findOne({where:{email}});
         if(!user)
-            throw typia.random<NotExistedUser>();
+            throw new NotExistedUser();
         const isValidated = validatePassword(password,user.password!);
         if(isValidated)
-            throw typia.random<NotValidatedPassword>();
+            throw new NotValidatedPassword();
         const token = this.jwtProvider.generateToken({email});
         return token;
     }

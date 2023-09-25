@@ -1,10 +1,13 @@
 import { PlaylistModule } from '@modules/playlist.module';
+import { SoundtrackFollowListModule } from '@modules/soundtrack-list-follow.module';
 import { SoundtrackModule } from '@modules/soundtrack.module';
 import { UserModule } from '@modules/user.module';
 import { PromotionModule } from '@modules/promotion.module';
 import { Module } from '@nestjs/common';
+import { APP_FILTER } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PaymentModule } from './modules/payment.module';
+import { AllExceptionsFilter } from './interceptor/error.interceptor';
 
 @Module({
   imports: [
@@ -20,6 +23,7 @@ import { PaymentModule } from './modules/payment.module';
     entities : ["dist/**/*.entity.js"],
   })
   ,
+  SoundtrackFollowListModule,
   PlaylistModule,
   PromotionModule,
   SoundtrackModule,
@@ -27,7 +31,10 @@ import { PaymentModule } from './modules/payment.module';
   PaymentModule
 ],
   controllers: [],
-  providers: [],
+  providers: [{
+    provide:APP_FILTER,
+    useClass:AllExceptionsFilter
+  }],
   exports:[TypeOrmModule]
 })
 
